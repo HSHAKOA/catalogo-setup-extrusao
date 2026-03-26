@@ -1,0 +1,47 @@
+[
+  {
+    "code": "TP-001",
+    "name": "Ferramenta Perfil Vedacao 18 mm",
+    "product": "Perfil Vedacao Branco",
+    "cycle_time_seconds": 42,
+    "piece_weight_grams": 28.5,
+    "expected_scrap_percent": 2.8,
+    "time_per_piece_seconds": 11.5,
+    "machine_parameters": {
+      "temperature": "Zona 1: 165 C | Zona 2: 172 C | Cabecote: 178 C",
+      "pressure": "128 bar",
+      "speed": "14.5 m/min"
+    },
+    "operational_notes": "Aguardar estabilizacao termica antes da liberacao da puxada. Ajustar resfriamento se houver brilho excessivo."
+  },
+  {
+    "code": "TP-002",
+    "name": "Ferramenta Tubo Tecnico 45 mm",
+    "product": "Tubo Tecnico Azul",
+    "cycle_time_seconds": 55,
+    "piece_weight_grams": 142.3,
+    "expected_scrap_percent": 3.6,
+    "time_per_piece_seconds": 18,
+    "machine_parameters": {
+      "temperature": "Zona 1: 182 C | Zona 2: 188 C | Cabecote: 193 C",
+      "pressure": "146 bar",
+      "speed": "9.8 m/min"
+    },
+    "operational_notes": "Conferir centralizacao na saida da fieira e validar espessura antes de iniciar a producao continua."
+  },
+  {
+    "code": "TP-003",
+    "name": "Ferramenta Canaleta Flex 22 mm",
+    "product": "Canaleta Preta Flexivel",
+    "cycle_time_seconds": 48,
+    "piece_weight_grams": 36.1,
+    "expected_scrap_percent": 2.2,
+    "time_per_piece_seconds": 13.2,
+    "machine_parameters": {
+      "temperature": "Zona 1: 170 C | Zona 2: 176 C | Cabecote: 181 C",
+      "pressure": "121 bar",
+      "speed": "13.1 m/min"
+    },
+    "operational_notes": "Em troca de cor, purgar por no minimo 8 minutos. Verificar uniformidade do acabamento antes da liberacao."
+  }
+]
