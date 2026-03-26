@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <p class="eyebrow">Consulta rápida</p>
+      <h1>Catálogo técnico de setup</h1>
+      <p class="lead">Selecione a ferramenta e visualize imediatamente os parâmetros já definidos.</p>
+    </section>
+
+    <section class="selector-panel">
+      <label class="field-label" for="tool-select">Ferramenta</label>
+      <select id="tool-select" class="tool-select">
+        {% for tool in tools %}
+          <option value="{{ tool.code }}" {% if initial_tool and tool.code == initial_tool.code %}selected{% endif %}>
+            {{ tool.code }} | {{ tool.name }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <div class="quick-tools" id="quick-tools">
+        {% for tool in tools %}
+          <button type="button" class="quick-tool {% if initial_tool and tool.code == initial_tool.code %}active{% endif %}" data-code="{{ tool.code }}">
+            {{ tool.code }}
+          </button>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="details-panel" id="details-panel">
+      {% if initial_tool %}
+        <header class="details-header">
+          <div>
+            <p class="tool-code" id="tool-code">{{ initial_tool.code }}</p>
+            <h2 id="tool-name">{{ initial_tool.name }}</h2>
+            <p class="product-line" id="product-line">{{ initial_tool.product }}</p>
+          </div>
+        </header>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Tempo de ciclo</span>
+            <strong id="cycle-time">{{ initial_tool.cycle_time_seconds }} s</strong>
+          </article>
+          <article class="stat-card">
+            <span>Peso da peça</span>
+            <strong id="piece-weight">{{ initial_tool.piece_weight_grams }} g</strong>
+          </article>
+          <article class="stat-card">
+            <span>Refugo esperado</span>
+            <strong id="scrap">{{ initial_tool.expected_scrap_percent }}%</strong>
+          </article>
+          <article class="stat-card">
+            <span>Tempo por peça</span>
+            <strong id="piece-time">{{ initial_tool.time_per_piece_seconds }} s</strong>
+          </article>
+        </div>
+
+        <article class="parameter-box">
+          <h3>Parâmetros de máquina</h3>
+          <div class="parameter-grid">
+            <div class="parameter-item">
+              <span>Temperatura</span>
+              <strong id="temperature">{{ initial_tool.machine_parameters.temperature }}</strong>
+            </div>
+            <div class="parameter-item">
+              <span>Pressão</span>
+              <strong id="pressure">{{ initial_tool.machine_parameters.pressure }}</strong>
+            </div>
+            <div class="parameter-item">
+              <span>Velocidade</span>
+              <strong id="speed">{{ initial_tool.machine_parameters.speed }}</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="notes-box">
+          <h3>Observações operacionais</h3>
+          <p id="notes">{{ initial_tool.operational_notes }}</p>
+        </article>
+      {% endif %}
+    </section>
+  </main>
+
+  <script>
+    window.initialCatalog = {{ tools|tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
