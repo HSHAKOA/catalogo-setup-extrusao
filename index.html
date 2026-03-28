@@ -3,97 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Setup</title>
+  <title>NeuroELIZA • Chatbot reflexivo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <main class="app-shell">
-    <section class="hero">
-      <p class="eyebrow">Consulta rápida</p>
-      <h1>Catálogo técnico de setup</h1>
-      <p class="lead">Selecione a ferramenta e visualize imediatamente os parâmetros já definidos.</p>
+  <main class="layout">
+    <section class="hero card">
+      <p class="eyebrow">Primeira versão (autônoma)</p>
+      <h1>NeuroELIZA: chatbot jovem, reflexivo e com base em neurociência</h1>
+      <p class="lead">Assunções mínimas: foco em conversas de autoconhecimento (não diagnóstico), tom amigável e linguagem natural em português do Brasil.</p>
     </section>
 
-    <section class="selector-panel">
-      <label class="field-label" for="tool-select">Ferramenta</label>
-      <select id="tool-select" class="tool-select">
-        {% for tool in tools %}
-          <option value="{{ tool.code }}" {% if initial_tool and tool.code == initial_tool.code %}selected{% endif %}>
-            {{ tool.code }} | {{ tool.name }}
-          </option>
-        {% endfor %}
-      </select>
+    <section class="grid">
+      <article class="card">
+        <h2>1) Visão geral do chatbot</h2>
+        <ul>
+          <li>Inspirado na lógica da ELIZA: escuta ativa, reformulação e perguntas que aprofundam.</li>
+          <li>Visual e ritmo de resposta de IA moderna, com mensagens curtas e contextualizadas.</li>
+          <li>Base conceitual de neurociência aplicada: regulação emocional, atenção, hábito e estresse.</li>
+        </ul>
+      </article>
 
-      <div class="quick-tools" id="quick-tools">
-        {% for tool in tools %}
-          <button type="button" class="quick-tool {% if initial_tool and tool.code == initial_tool.code %}active{% endif %}" data-code="{{ tool.code }}">
-            {{ tool.code }}
-          </button>
-        {% endfor %}
-      </div>
-    </section>
+      <article class="card">
+        <h2>2) Personalidade e voz</h2>
+        <ul>
+          <li>Tom jovem e leve: próximo, sem parecer robótico.</li>
+          <li>Empático e sem julgamento, com validação emocional real.</li>
+          <li>Clareza acima de jargão: explica cérebro e comportamento em linguagem simples.</li>
+        </ul>
+      </article>
 
-    <section class="details-panel" id="details-panel">
-      {% if initial_tool %}
-        <header class="details-header">
-          <div>
-            <p class="tool-code" id="tool-code">{{ initial_tool.code }}</p>
-            <h2 id="tool-name">{{ initial_tool.name }}</h2>
-            <p class="product-line" id="product-line">{{ initial_tool.product }}</p>
-          </div>
-        </header>
+      <article class="card">
+        <h2>3) Princípios de conversa</h2>
+        <ul>
+          <li><strong>Escuta reflexiva:</strong> espelha o que a pessoa disse para mostrar compreensão.</li>
+          <li><strong>Reformulação:</strong> reorganiza a fala em frases mais claras e acionáveis.</li>
+          <li><strong>Perguntas abertas:</strong> prioriza "o que", "como" e "quando" para aprofundar.</li>
+          <li><strong>Micro-hipóteses:</strong> sugere relações entre emoção, corpo e contexto sem impor verdade.</li>
+        </ul>
+      </article>
 
-        <div class="stats-grid">
-          <article class="stat-card">
-            <span>Tempo de ciclo</span>
-            <strong id="cycle-time">{{ initial_tool.cycle_time_seconds }} s</strong>
-          </article>
-          <article class="stat-card">
-            <span>Peso da peça</span>
-            <strong id="piece-weight">{{ initial_tool.piece_weight_grams }} g</strong>
-          </article>
-          <article class="stat-card">
-            <span>Refugo esperado</span>
-            <strong id="scrap">{{ initial_tool.expected_scrap_percent }}%</strong>
-          </article>
-          <article class="stat-card">
-            <span>Tempo por peça</span>
-            <strong id="piece-time">{{ initial_tool.time_per_piece_seconds }} s</strong>
-          </article>
+      <article class="card">
+        <h2>4) Comportamento em diálogo</h2>
+        <ul>
+          <li>Detecta temas como ansiedade, cansaço, desânimo e procrastinação.</li>
+          <li>Responde primeiro com validação, depois com leitura neurocomportamental breve.</li>
+          <li>Fecha com pergunta de continuidade para manter profundidade progressiva.</li>
+          <li>Se a mensagem vier vaga, pede contexto ao invés de inventar.</li>
+        </ul>
+      </article>
+
+      <article class="card full">
+        <h2>5) Exemplos rápidos de interação</h2>
+        <div class="examples">
+          <p><strong>Usuário:</strong> “Tô ansioso antes de reunião.”</p>
+          <p><strong>NeuroELIZA:</strong> “Faz sentido isso pesar. Quando a ansiedade bate, seu cérebro entra em alerta. O que mais dispara esse gatilho em você?”</p>
+          <p><strong>Usuário:</strong> “Travando pra começar uma tarefa.”</p>
+          <p><strong>NeuroELIZA:</strong> “Parece conflito entre vontade e pressão. O que torna esse começo tão difícil hoje?”</p>
         </div>
+      </article>
+    </section>
 
-        <article class="parameter-box">
-          <h3>Parâmetros de máquina</h3>
-          <div class="parameter-grid">
-            <div class="parameter-item">
-              <span>Temperatura</span>
-              <strong id="temperature">{{ initial_tool.machine_parameters.temperature }}</strong>
-            </div>
-            <div class="parameter-item">
-              <span>Pressão</span>
-              <strong id="pressure">{{ initial_tool.machine_parameters.pressure }}</strong>
-            </div>
-            <div class="parameter-item">
-              <span>Velocidade</span>
-              <strong id="speed">{{ initial_tool.machine_parameters.speed }}</strong>
-            </div>
-          </div>
-        </article>
+    <section class="card chat-card">
+      <h2>Teste o chatbot</h2>
+      <div id="chat-log" class="chat-log" aria-live="polite"></div>
 
-        <article class="notes-box">
-          <h3>Observações operacionais</h3>
-          <p id="notes">{{ initial_tool.operational_notes }}</p>
-        </article>
-      {% endif %}
+      <form id="chat-form" class="chat-form">
+        <label for="message" class="sr-only">Mensagem</label>
+        <input id="message" name="message" type="text" placeholder="Ex.: Tô me sentindo sobrecarregado com tudo" maxlength="400" required>
+        <button type="submit">Enviar</button>
+      </form>
     </section>
   </main>
 
-  <script>
-    window.initialCatalog = {{ tools|tojson }};
-  </script>
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
