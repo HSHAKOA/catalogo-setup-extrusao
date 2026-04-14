@@ -1,21 +1,22 @@
-# Catalogo Tecnico de Setup de Extrusao
+# Catálogo Técnico de Setup de Extrusão
 
-Aplicacao web leve em Flask para consulta rapida de setups no chao de fabrica.
+Aplicação web leve em Flask para consulta rápida de setups no chão de fábrica.
 
 ## Arquitetura simples
 
-- Backend unico em `Flask`
-- Dados fixos em arquivo JSON
+- Backend único em `Flask`
+- Dados do catálogo em JSON
 - Frontend em HTML, CSS e JavaScript leve
-- Sem banco, sem login, sem historico
+- Banco SQLite para dados por usuário (transações)
 
 ## Estrutura de arquivos
 
-- `app.py`: servidor Flask e endpoints
-- `data/tool_catalog.json`: catalogo editavel das ferramentas
-- `templates/index.html`: tela unica para o operador
-- `static/style.css`: estilo mobile-first
-- `static/app.js`: selecao rapida e exibicao imediata
+- `app.py`: servidor Flask, endpoints do catálogo e API de usuários/transações
+- `data/tool_catalog.json`: catálogo editável das ferramentas
+- `data/app.db`: banco SQLite criado automaticamente na primeira execução
+- `index.html`: tela única para o operador
+- `style.css`: estilo mobile-first
+- `app.js`: seleção rápida e exibição imediata
 
 ## Como rodar
 
@@ -26,9 +27,54 @@ flask --app app run --debug
 
 Abra `http://127.0.0.1:5000`.
 
-## Como editar os dados
+## API de persistência por usuário
 
-Edite o arquivo `data/tool_catalog.json`.
+A aplicação agora possui banco SQLite para armazenar dados de cada usuário separadamente.
+
+### Criar usuário
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"username":"maria"}'
+```
+
+### Listar usuários
+
+```bash
+curl http://127.0.0.1:5000/api/users
+```
+
+### Criar transação para um usuário
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/users/1/transactions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id":"tx-001",
+    "description":"Salário",
+    "amount":5000,
+    "type":"income",
+    "category":"Receita",
+    "date":"2026-04-14"
+  }'
+```
+
+### Listar transações de um usuário
+
+```bash
+curl http://127.0.0.1:5000/api/users/1/transactions
+```
+
+### Excluir transação de um usuário
+
+```bash
+curl -X DELETE http://127.0.0.1:5000/api/users/1/transactions/tx-001
+```
+
+## Como editar os dados do catálogo
+
+Edite o arquivo `data/tool_catalog.json` (ou `tool_catalog.json`, para compatibilidade legada).
 
 Cada item representa uma ferramenta com:
 
@@ -41,38 +87,3 @@ Cada item representa uma ferramenta com:
 - `time_per_piece_seconds`
 - `machine_parameters`
 - `operational_notes`
-
-Depois de salvar o JSON, recarregue a pagina.
-
-## Publicar em nuvem
-
-Recomendacao simples: usar `Render` com deploy por GitHub.
-
-### Fluxo sugerido
-
-1. Suba este projeto para um repositorio no GitHub.
-2. Edite os dados em `data/tool_catalog.json`.
-3. Faça `git add`, `git commit` e `git push`.
-4. O Render publica automaticamente a nova versao.
-
-### Arquivos de deploy
-
-- `requirements.txt`: dependencias do projeto
-- `render.yaml`: configuracao do servico web
-
-### No Render
-
-1. Crie uma conta.
-2. Conecte o GitHub.
-3. Crie um novo `Blueprint` ou `Web Service` usando este repositorio.
-4. O Render vai usar:
-   - Build command: `pip install -r requirements.txt`
-   - Start command: `gunicorn app:app`
-
-### Resultado
-
-Voce passa a ter uma URL publica, por exemplo:
-
-`https://seu-catalogo.onrender.com`
-
-Toda alteracao feita no codigo ou no JSON e enviada com `git push` vira nova publicacao.
